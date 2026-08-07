@@ -11,10 +11,22 @@ import (
 func Start() {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	store := storage.NewMemeoryStore()
+	fmt.Print("1. Go map \n2. WAL\n> ")
+	
+	var store storage.Storage
+	if scanner.Scan(){
+		line := scanner.Text()
+	switch line {
+		case "1":
+			store = storage.NewMemeoryStore()
+		case "2":
+			store = storage.NewWalStore() 
+	}
+	}
+	
 	for scanner.Err() == nil {
+		
 		fmt.Print("> ")
-
 		if !scanner.Scan(){
 			break
 		}

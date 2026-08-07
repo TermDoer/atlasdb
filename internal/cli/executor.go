@@ -21,8 +21,10 @@ func Execute(cmd Command, store storage.Storage) error {
 		}
 		return ok
 	case "SET":
+		if len(cmd.Args) >= 2 {
 		store.Set(cmd.Args[0], []byte(cmd.Args[1]))
 		fmt.Println("ok")
+		}
 		return nil
 	case "DELETE":
 		store.Delete(cmd.Args[0])
