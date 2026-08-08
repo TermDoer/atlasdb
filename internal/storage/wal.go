@@ -75,7 +75,8 @@ func (m *WalStorage) Keys() []string {
 }
 
 func WalRead(store Storage) error {
-	file, err := os.Open("../../internal/storage/wal.log")
+	file, err := os.OpenFile("../../internal/storage/wal.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
+	
 	if err != nil {
 		return errors.New("Error reading wal") 
 	}
