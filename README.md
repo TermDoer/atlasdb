@@ -3,14 +3,16 @@
 ### Architecture
 ```
       Client
-        │
+        |
+        V
      atlasctl
         │
       atlasd
         │
-┌───────────────┐
-│    Go map     │
-└───────────────┘
+        V
+----------------
+|    Go map     |
+-----------------
 ```
 ### Drawbacks
 ```
@@ -29,19 +31,43 @@ key not found
 ### Architecture
 ```
         Client
-           │
+           |
+           V
         atlasctl
-           │
+           |
          atlasd
-           │
-      ┌──────────┐
-      │ MemTable │
-      └────┬─────┘
-           │
-           ▼
+           |
+           V
+      ------------
+      | MemTable |
+      ------------
+           |
+           V
      Write Ahead Log
-           │
+           |
      append-only file
 ```
 ### Drawbacks
 - SSD memory delete, or file delete
+
+## 3. SSTables
+### Architecture
+```
+      Client
+        |
+        V
+     atlasctl
+        |
+      atlasd
+        |
+        V
+    -----------
+    | MemTable |
+     -----------
+         |
+      (Flush)
+   SSTable-001.db
+   SSTable-002.db
+```
+### Drawbacks
+- Read overhead
