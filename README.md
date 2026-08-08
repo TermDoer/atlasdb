@@ -70,4 +70,5 @@ key not found
    SSTable-002.db
 ```
 ### Drawbacks
+- SSD memory delete, or file delete
 - Read overhead
