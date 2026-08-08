@@ -11,7 +11,7 @@ import (
 func Start() {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	fmt.Print("1. Go map \n2. WAL\n> ")
+	fmt.Print("1. Go map \n2. WAL \n3. SSTable\n> ")
 	
 	var store storage.Storage
 	if scanner.Scan(){
@@ -21,6 +21,9 @@ func Start() {
 			store = storage.NewMemeoryStore()
 		case "2":
 			store = storage.NewWalStore() 
+		case "3":
+			maxlen := 10
+			store = storage.NewSSTableStore(maxlen)
 	}
 	}
 	

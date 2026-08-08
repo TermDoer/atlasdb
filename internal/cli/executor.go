@@ -17,7 +17,7 @@ func Execute(cmd Command, store storage.Storage) error {
 		if ok == nil {
 			fmt.Println(string(value))
 		} else {
-		fmt.Println(ok)
+			fmt.Println(ok)
 		}
 		return ok
 	case "SET":
