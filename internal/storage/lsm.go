@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var MAX_SSTABLES int = 20
+
 type LSMStorage struct {
 	data     map[string][]byte
 	maxlen   int
@@ -70,7 +72,12 @@ func (m *LSMStorage) Set(key string, value []byte) error {
 			}
 			groups[parts[1]] = append(groups[parts[1]], entry)
 		}
+		
+		if len(entries) > MAX_SSTABLES {
+			BatchCompaction(entries)
+		} else {
 			DuplicateIndexKeyCompaction(groups)
+		}
 	}
 	walfile, err := os.OpenFile("../../internal/storage/wal.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 	if err != nil {
@@ -256,7 +263,7 @@ func SSTableSearch(sstable os.DirEntry, key string) ([]byte, error) {
 	return nil, nil
 }
 
-func BatchCompaction(sstables []os.DirEntry, batchSize int) error{
+func BatchCompaction(sstables []os.DirEntry) error{
 	sort.Slice(sstables, func (i, j int) bool {
 		return strings.Compare(sstables[i].Name(), sstables[j].Name()) > 0
 	})
