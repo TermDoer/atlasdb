@@ -99,6 +99,9 @@ key not found
       (Flush)
    SSTable-001.db
    SSTable-002.db
+         |
+    (Threshold)
+   SSTable-001.db
 ```
 ### Features
 - Failure recovery
